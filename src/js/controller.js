@@ -31,11 +31,16 @@ const renderSpinner = function (parentEl) {
 
 const showRecipe = async function () {
   try {
+    //Getting dynamically id from the url (window.location is the entire url)
+    const id = window.location.hash.slice(1);
+    console.log(id);
+    //Guard clause
+    if (!id) return;
     //Loading recipe
     renderSpinner(recipeContainer); //parentEl is recipeContainer
     const res = await fetch(
       // 'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc990'
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
 
     const data = await res.json();
@@ -159,4 +164,13 @@ const showRecipe = async function () {
   }
 };
 
-showRecipe();
+//when we copy url and paste it in new tab not loading recipe, solution
+
+//Listen for hashchange
+// window.addEventListener('hashchange', showRecipe);
+
+// //Listen for load event
+// window.addEventListener('load', showRecipe);
+
+//shorthand:
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
