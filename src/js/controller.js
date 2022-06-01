@@ -24,19 +24,12 @@ const controlRecipes = async function () {
     //Rendering recipe
     recipeView.render(model.state.recipe); //this render methid will accept this data and store to the RecipeView object
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
 
-//when we copy url and paste it in new tab not loading recipe, solution
-
-//Listen for hashchange
-// window.addEventListener('hashchange', controlRecipes );
-
-// //Listen for load event
-// window.addEventListener('load', controlRecipes );
-
-//shorthand:
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
+//Implement publisher subscriber pattern
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
