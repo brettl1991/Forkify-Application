@@ -6,14 +6,6 @@ import 'regenerator-runtime/runtime';
 
 const recipeContainer = document.querySelector('.recipe');
 
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
@@ -22,7 +14,7 @@ const controlRecipes = async function () {
   try {
     //Getting dynamically id from the url (window.location is the entire url)
     const id = window.location.hash.slice(1);
-    console.log(id);
+    console.log('id:', id);
     //Guard clause
     if (!id) return;
     recipeView.renderSpinner(); //parentEl is recipeContainer
