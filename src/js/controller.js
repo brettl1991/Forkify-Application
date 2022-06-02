@@ -24,7 +24,8 @@ const controlRecipes = async function () {
     //Rendering recipe
     recipeView.render(model.state.recipe); //this render methid will accept this data and store to the RecipeView object
   } catch (err) {
-    console.log(err);
+    //rendering error to ui
+    recipeView.renderError();
   }
 };
 
