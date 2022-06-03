@@ -1,24 +1,22 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import SearchView from './views/searchView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-
-const recipeContainer = document.querySelector('.recipe');
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
+import { async } from 'regenerator-runtime/runtime';
+import searchView from './views/searchView.js';
 
 const controlRecipes = async function () {
   try {
     //Getting dynamically id from the url (window.location is the entire url)
     const id = window.location.hash.slice(1);
-    console.log('id:', id);
+    // console.log('id:', id);
     //Guard clause
     if (!id) return;
     recipeView.renderSpinner(); //parentEl is recipeContainer
     //Loading recipe
+    ////not storing it in any variable as not return anything just manipulating the state
     await model.loadRecipe(id); //we get access to state.recipe from model.js
 
     //Rendering recipe
@@ -29,8 +27,24 @@ const controlRecipes = async function () {
   }
 };
 
+const controlSearchResults = async function () {
+  try {
+    //Get search query
+    const query = searchView.getQuery();
+    if (!query) return;
+    //not storing it in any variable as not return anything just manipulating the state
+    //Load search results
+    await model.loadSearchResults(query);
+    //Render results
+    console.log(model.state.search.results);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 //Implement publisher subscriber pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
 };
 init();
