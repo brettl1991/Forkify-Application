@@ -9,14 +9,14 @@ import { async } from 'regenerator-runtime/runtime';
 import searchView from './views/searchView.js';
 
 //coming from parcel
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipes = async function () {
   try {
     //Getting dynamically id from the url (window.location is the entire url)
-    const id = window.location.hash.slice(1);
+    const id = window.location.hash.slice();
     // console.log('id:', id);
     //Guard clause
     if (!id) return;
@@ -44,7 +44,8 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
     //Render results
     // console.log(model.state.search.results);
-    resultsView.render(model.state.search.results);
+    // resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage(1));
   } catch (err) {
     console.log(err);
   }
