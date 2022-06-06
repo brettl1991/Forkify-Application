@@ -18,7 +18,7 @@ import paginationView from './views/paginationView.js';
 const controlRecipes = async function () {
   try {
     //Getting dynamically id from the url (window.location is the entire url)
-    const id = window.location.hash.slice();
+    const id = window.location.hash.slice(1);
     // console.log('id:', id);
     //Guard clause
     if (!id) return;
@@ -65,9 +65,18 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+//Controll servings
+const controlServings = function (newServings) {
+  //Update recipe servings in state
+  model.updateServings(newServings);
+  //Update the recipeView
+  recipeView.render(model.state.recipe);
+};
+
 //Implement publisher subscriber pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdataservings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };
