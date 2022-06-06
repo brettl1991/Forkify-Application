@@ -15,8 +15,8 @@ export default class View {
   //Implementing a method that will update the DOM but only in places where text and attributes change
   //Create new markup but not render it, generate this markup and compare that new html to a cur html, and  then only change text and attributes that changed of the old version to new version
   update(data) {
-    if (!data || (Array.isArray(data) && data.length === 0))
-      return this.renderError();
+    // if (!data || (Array.isArray(data) && data.length === 0))
+    //   return this.renderError();
     this._data = data; //stores randering recipe's data
     const newMarkup = this._generateMarkup();
 

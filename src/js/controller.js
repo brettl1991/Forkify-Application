@@ -23,6 +23,10 @@ const controlRecipes = async function () {
     //Guard clause
     if (!id) return;
     recipeView.renderSpinner(); //parentEl is recipeContainer
+
+    //0) Update results view to markselected search result
+    resultsView.update(model.getSearchResultsPage());
+
     //Loading recipe
     ////not storing it in any variable as not return anything just manipulating the state
     await model.loadRecipe(id); //we get access to state.recipe from model.js
