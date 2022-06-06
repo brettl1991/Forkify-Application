@@ -12,6 +12,46 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  //Implementing a method that will update the DOM but only in places where text and attributes change
+  //Create new markup but not render it, generate this markup and compare that new html to a cur html, and  then only change text and attributes that changed of the old version to new version
+  update(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+    this._data = data; //stores randering recipe's data
+    const newMarkup = this._generateMarkup();
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+    // console.log(curElements);
+    // console.log(newElements);
+
+    //loop over 2 array at the same time
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+      //isEqualNode compare the 2 arrays
+      console.log(curEl, newEl.isEqualNode(curEl));
+
+      //Updates change TEXT
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        // console.log('💥', newEl.firstChild.nodeValue.trim());
+        curEl.textContent = newEl.textContent;
+      }
+
+      ////Updates change ATTRIBUTES
+      if (!newEl.isEqualNode(curEl))
+        // console.log(newEl.attributes);
+        Array.from(newEl.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+
+      // console.log(newEl.attributes);
+    });
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }
