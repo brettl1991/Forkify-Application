@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import SearchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import PaginationView from './views/resultsView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -26,6 +27,7 @@ const controlRecipes = async function () {
 
     //0) Update results view to markselected search result
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     //Loading recipe
     ////not storing it in any variable as not return anything just manipulating the state
@@ -79,11 +81,15 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
-  console.log(model.state.recipe.bookmarked);
+  //Add or remove bookmark
+  // console.log(model.state.recipe.bookmarked);
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id);
-  console.log(model.state.recipe);
+  // console.log(model.state.recipe);
+  //Update recipeview
   recipeView.update(model.state.recipe);
+  //Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
 };
 
 //Implement publisher subscriber pattern
