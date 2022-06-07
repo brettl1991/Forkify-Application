@@ -51,6 +51,8 @@ export const loadSearchResults = async function (query) {
       };
     });
     console.log(state.search.results); //59 serach reults
+    //load new search results reset page
+    state.search.page = 1;
   } catch (err) {
     console.error(`${err} 💥💥💥💥`);
     throw err;
