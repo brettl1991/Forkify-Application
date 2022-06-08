@@ -27,17 +27,19 @@ const controlRecipes = async function () {
 
     //0) Update results view to markselected search result
     resultsView.update(model.getSearchResultsPage());
+    //1) Updating bookmarks view
     bookmarksView.update(model.state.bookmarks);
 
-    //Loading recipe
+    //2) Loading recipe
     ////not storing it in any variable as not return anything just manipulating the state
     await model.loadRecipe(id); //we get access to state.recipe from model.js
 
-    //Rendering recipe
+    //3) Rendering recipe
     recipeView.render(model.state.recipe); //this render methid will accept this data and store to the RecipeView object
   } catch (err) {
     //rendering error to ui
     recipeView.renderError();
+    console.error(err);
   }
 };
 
@@ -92,8 +94,13 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 //Implement publisher subscriber pattern
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdataservings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
