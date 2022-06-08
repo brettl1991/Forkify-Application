@@ -4,6 +4,7 @@ import SearchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import PaginationView from './views/resultsView.js';
 import bookmarksView from './views/bookmarksView.js';
+import addRecipeView from './views/addRecipeView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
