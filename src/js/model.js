@@ -1,6 +1,7 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, KEY } from './config.js';
-import { getJSON, sendJSON } from './helpers.js';
+// import { getJSON, sendJSON } from './helpers.js';
+import { AJAX } from './helpers.js';
 
 export const state = {
   recipe: {},
@@ -30,7 +31,7 @@ const createRecipeObject = function (data) {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}`);
     state.recipe = createRecipeObject(data);
     //check if there is already a recipe with same id as bookmark state, then we will mark cur recipe as bookmarked set to true
     if (state.bookmarks.some(bookmark => bookmark.id === id))
@@ -48,7 +49,7 @@ export const loadRecipe = async function (id) {
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}`);
     //creating new array containing new object with different property names
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -146,7 +147,7 @@ export const uploadRecipe = async function (newRecipe) {
     };
 
     // console.log(recipe);
-    const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
     // console.log(data);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
