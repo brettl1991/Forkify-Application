@@ -2,6 +2,17 @@ import icons from 'url:../../img/icons.svg';
 
 export default class View {
   _data;
+
+  /**
+   *Render the recived object to the DOM
+   * @param {Object| Object[]} data The data to be rendered (e.g. recipe)//means we are expecting an array of object
+   * @param {boolean} [render=true] If false create markup string instead of rendering to the DOM
+   * @returns {undefined | undefined} A markup stringis returned if render=false
+   * @this {Object} View instance
+   * @author Agnes Brettl
+   * @todo Finish the implementation
+   */
+
   render(data, render = true) {
     //check if data exist
     if (!data || (Array.isArray(data) && data.length === 0))
