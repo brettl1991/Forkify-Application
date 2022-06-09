@@ -54,7 +54,7 @@ class RecipeView extends View {
             }</span>
             <span class="recipe__info-text">minutes</span>
           </div>
-          <div class="recipe__info">
+        <div class="recipe__info">
             <svg class="recipe__info-icon">
               <use href="${icons}#icon-users"></use>
             </svg>
@@ -63,7 +63,7 @@ class RecipeView extends View {
             }</span>
             <span class="recipe__info-text">servings</span>
 
-            <div class="recipe__info-buttons">
+          <div class="recipe__info-buttons">
               <button class="btn--tiny btn--update-servings" data-update-to="${
                 this._data.servings - 1
               }">
@@ -78,16 +78,20 @@ class RecipeView extends View {
                   <use href="${icons}#icon-plus-circle"></use>
                 </svg>
               </button>
-            </div>
+          </div>
           </div>
 
-          <div class="recipe__user-generated">
-                      </div>
+          <div class="recipe__user-generated ${this._data.key ? '' : 'hidden'}">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
+          </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
               <use href="${icons}#icon-bookmark${
-      this._data.bookmarked ? '-fill' : ''
-    }"></use>
+      this._data.bookmarked ? '-fill' : ' '
+    }">
+              </use>
             </svg>
           </button>
         </div>
@@ -120,6 +124,7 @@ class RecipeView extends View {
         </div>
     `;
   }
+
   _generateMarkupIngredient(ing) {
     return `
       <li class="recipe__ingredient">
